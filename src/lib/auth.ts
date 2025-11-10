@@ -6,7 +6,7 @@ import Discord from "next-auth/providers/discord";
 import Twitch from "next-auth/providers/twitch";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./db";
-import { users } from "./db-schema";
+import { users, profiles } from "./db-schema";
 import { authUtils, validationSchemas } from "./utils";
 import { eq } from "drizzle-orm";
 
