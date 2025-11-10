@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { Session } from "next-auth";
 
 interface AuthUser {
   id: string;
@@ -181,7 +180,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refresh,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {
