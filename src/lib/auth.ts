@@ -31,9 +31,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             .select()
             .from(users)
             .where(
-              eq(users.email, emailOrUsername) || eq(users.username, emailOrUsername)
+              eq(users.email, emailOrUsername)
             )
             .limit(1);
+
+          if (!user[0]) {
+            // Try finding by username if email didn't match
+            const userByUsername = await db
+              .select()
+              .from(users)
+              .where(eq(users.username, emailOrUsername))
+              .limit(1);
+
+            if (!userByUsername[0]) {
+              return null;
+            }
+
+            // Use the username match
+            user[0] = userByUsername[0];
+          }
 
           if (!user[0] || !user[0].isActive) {
             return null;
